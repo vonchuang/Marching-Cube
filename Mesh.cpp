@@ -59,16 +59,20 @@ Mesh Mesh::LoadMesh(const std::string &filename, const std::string &newmesh)
 
 		printf("shape[%ld].vertices: %ld\n", i, shapes[i].mesh.positions.size());
 		assert((shapes[i].mesh.indices.size() % 4) == 0);
-		for (size_t f = 0; f < shapes[i].mesh.indices.size() / 4; f++) {
+		
+		//indice
 		/*
+		for (size_t f = 0; f < shapes[i].mesh.indices.size() / 4; f++) {
+		
 			printf("  idx[%ld] = %d, %d, %d, %d. mat_id = %d\n", f,
 				shapes[i].mesh.indices[4 * f + 0],
 				shapes[i].mesh.indices[4 * f + 1],
 				shapes[i].mesh.indices[4 * f + 2],
 				shapes[i].mesh.indices[4 * f + 3],
 				shapes[i].mesh.material_ids[f]);
-		*/
+		
 		}
+		*/
 
 		//v: position
 		assert((shapes[i].mesh.positions.size() % 3) == 0);
@@ -100,8 +104,9 @@ Mesh Mesh::LoadMesh(const std::string &filename, const std::string &newmesh)
 		}
 
 		//vt: texcoords
+		/*
 		for (size_t v = 0; v < shapes[i].mesh.texcoords.size() / 3; v++) {
-			/*
+			
 			printf("  vt[%ld] = (%f, %f)\n", v,
 				shapes[i].mesh.texcoords[2 * v + 0],
 				shapes[i].mesh.texcoords[2 * v + 1]);
@@ -109,12 +114,14 @@ Mesh Mesh::LoadMesh(const std::string &filename, const std::string &newmesh)
 			fprintf(fp, "vt %.2f %.2f \n",
 				shapes[i].mesh.texcoords[2 * v + 0],
 				shapes[i].mesh.texcoords[2 * v + 1]);
-			*/
+			
 		}
+		*/
 
 		//vn: normals
+		/*
 		for (size_t v = 0; v < shapes[i].mesh.normals.size() / 3; v++) {
-			/*
+			
 			printf("  vn[%ld] = (%f, %f, %f)\n", v,
 				shapes[i].mesh.normals[3 * v + 0],
 				shapes[i].mesh.normals[3 * v + 1],
@@ -124,13 +131,14 @@ Mesh Mesh::LoadMesh(const std::string &filename, const std::string &newmesh)
 				shapes[i].mesh.normals[3 * v + 0],
 				shapes[i].mesh.normals[3 * v + 1],
 				shapes[i].mesh.normals[3 * v + 2]);
-			*/
 		}
+		*/
 
 	}
 	
 
 	//material
+	/*
 	for (size_t i = 0; i < materials.size(); i++) {
 		printf("material[%ld].name = %s\n", i, materials[i].name.c_str());
 		printf("  material.Ka = (%f, %f ,%f)\n", materials[i].ambient[0], materials[i].ambient[1], materials[i].ambient[2]);
@@ -154,72 +162,72 @@ Mesh Mesh::LoadMesh(const std::string &filename, const std::string &newmesh)
 		printf("\n");
 
 	}
-	
+	*/
 
 	for (int i = 0;i < 19;++i) {
 		for (int j = 0; j < 19; ++j) {
 			for (int k = 0; k < 19; ++k) {
+				//if(points.pos[i][j][k] == 1){
+					GRIDCELL gridcell;
+					TRIANGLE triangle[8];
+					double isolevel = 0.01;
 
-				GRIDCELL gridcell;
-				TRIANGLE triangle[8];
-				double isolevel = 0.5;
-
-				for (int i = 0; i < 8; ++i) {
-					gridcell.p[i].x = 0; gridcell.p[i].y = 0; gridcell.p[i].z = 0;
-					gridcell.val[i]  = 0;
-					triangle[i].p[0].x = 0; triangle[i].p[0].y = 0; triangle[i].p[0].z = 0;
-					triangle[i].p[1].x = 0; triangle[i].p[1].y = 0; triangle[i].p[1].z = 0;
-					triangle[i].p[2].x = 0; triangle[i].p[2].y = 0; triangle[i].p[2].z = 0;
-				}
+					for (int i = 0; i < 8; ++i) {
+						gridcell.p[i].x = 0; gridcell.p[i].y = 0; gridcell.p[i].z = 0;
+						gridcell.val[i]  = 0;
+						triangle[i].p[0].x = 0; triangle[i].p[0].y = 0; triangle[i].p[0].z = 0;
+						triangle[i].p[1].x = 0; triangle[i].p[1].y = 0; triangle[i].p[1].z = 0;
+						triangle[i].p[2].x = 0; triangle[i].p[2].y = 0; triangle[i].p[2].z = 0;
+					}
 				
-				gridcell.val[0] = points.pos[i][j][k];
-				gridcell.p[0].x = (((double)(i)-10) / 10);
-				gridcell.p[0].y = (((double)(j)-10) / 10);
-				gridcell.p[0].z = (((double)(k)-10) / 10);
-				gridcell.val[1] = points.pos[i+1][j][k];
-				gridcell.p[1].x = (((double)(i+1)-10) / 10);
-				gridcell.p[1].y = (((double)(j  )-10) / 10);
-				gridcell.p[1].z = (((double)(k) - 10) / 10);
-				gridcell.val[2] = points.pos[i + 1][j+1][k];
-				gridcell.p[2].x = (((double)(i + 1) - 10) / 10);
-				gridcell.p[2].y = (((double)(j+1)-10) / 10);
-				gridcell.p[2].z = (((double)(k)-10) / 10);
-				gridcell.val[3] = points.pos[i][j+1][k];
-				gridcell.p[3].x = (((double)(i) - 10) / 10);
-				gridcell.p[3].y = (((double)(j+1)-10) / 10);
-				gridcell.p[3].z = (((double)(k) - 10) / 10);
-				gridcell.val[4] = points.pos[i][j][k+1];
-				gridcell.p[4].x = (((double)(i)-10) / 10);
-				gridcell.p[4].y = (((double)(j) - 10) / 10);
-				gridcell.p[4].z = (((double)(k+1)-10) / 10);
-				gridcell.val[5] = points.pos[i+1][j][k + 1];
-				gridcell.p[5].x = (((double)(i+1)-10) / 10);
-				gridcell.p[5].y = (((double)(j) - 10) / 10);
-				gridcell.p[5].z = (((double)(k + 1) - 10) / 10);
-				gridcell.val[6] = points.pos[i + 1][j + 1][k+1];
-				gridcell.p[6].x = (((double)(i + 1) - 10) / 10);
-				gridcell.p[6].y = (((double)(j + 1) - 10) / 10);
-				gridcell.p[6].z = (((double)(k+1)-10) / 10);
-				gridcell.val[7] = points.pos[i][j + 1][k + 1];
-				gridcell.p[7].x = (((double)(i) - 10) / 10);
-				gridcell.p[7].y = (((double)(j + 1) - 10) / 10);
-				gridcell.p[7].z = (((double)(k + 1) - 10) / 10);
+					gridcell.val[0] = points.pos[i][j][k];
+					gridcell.p[0].x = (((double)(i)-10) / 10);
+					gridcell.p[0].y = (((double)(j)-10) / 10);
+					gridcell.p[0].z = (((double)(k)-10) / 10);
+					gridcell.val[1] = points.pos[i+1][j][k];
+					gridcell.p[1].x = (((double)(i+1)-10) / 10);
+					gridcell.p[1].y = (((double)(j  )-10) / 10);
+					gridcell.p[1].z = (((double)(k) - 10) / 10);
+					gridcell.val[2] = points.pos[i + 1][j+1][k];
+					gridcell.p[2].x = (((double)(i + 1) - 10) / 10);
+					gridcell.p[2].y = (((double)(j+1)-10) / 10);
+					gridcell.p[2].z = (((double)(k)-10) / 10);
+					gridcell.val[3] = points.pos[i][j+1][k];
+					gridcell.p[3].x = (((double)(i) - 10) / 10);
+					gridcell.p[3].y = (((double)(j+1)-10) / 10);
+					gridcell.p[3].z = (((double)(k) - 10) / 10);
+					gridcell.val[4] = points.pos[i][j][k+1];
+					gridcell.p[4].x = (((double)(i)-10) / 10);
+					gridcell.p[4].y = (((double)(j) - 10) / 10);
+					gridcell.p[4].z = (((double)(k+1)-10) / 10);
+					gridcell.val[5] = points.pos[i+1][j][k + 1];
+					gridcell.p[5].x = (((double)(i+1)-10) / 10);
+					gridcell.p[5].y = (((double)(j) - 10) / 10);
+					gridcell.p[5].z = (((double)(k + 1) - 10) / 10);
+					gridcell.val[6] = points.pos[i + 1][j + 1][k+1];
+					gridcell.p[6].x = (((double)(i + 1) - 10) / 10);
+					gridcell.p[6].y = (((double)(j + 1) - 10) / 10);
+					gridcell.p[6].z = (((double)(k+1)-10) / 10);
+					gridcell.val[7] = points.pos[i][j + 1][k + 1];
+					gridcell.p[7].x = (((double)(i) - 10) / 10);
+					gridcell.p[7].y = (((double)(j + 1) - 10) / 10);
+					gridcell.p[7].z = (((double)(k + 1) - 10) / 10);
 				
 				
-				int ntriang = points.Polygonise(outputfile.c_str(), gridcell, isolevel, triangle);
-				/*
-				for(int i=0; i<ntriang; ++i){
-					//printf("%lf %lf %lf\n", triangle[ntriang].p[0].x, triangle[ntriang].p[0].y, triangle[ntriang].p[0].z );
-					//printf("%lf %lf %lf\n", triangle[ntriang].p[1].x, triangle[ntriang].p[1].y, triangle[ntriang].p[1].z );
-					//printf("%lf %lf %lf\n", triangle[ntriang].p[2].x, triangle[ntriang].p[2].y, triangle[ntriang].p[2].z );
-				}
+					int ntriang = points.Polygonise(outputfile.c_str(), gridcell, isolevel, triangle);
+					/*
+					for(int i=0; i<ntriang; ++i){
+						//printf("%lf %lf %lf\n", triangle[ntriang].p[0].x, triangle[ntriang].p[0].y, triangle[ntriang].p[0].z );
+						//printf("%lf %lf %lf\n", triangle[ntriang].p[1].x, triangle[ntriang].p[1].y, triangle[ntriang].p[1].z );
+						//printf("%lf %lf %lf\n", triangle[ntriang].p[2].x, triangle[ntriang].p[2].y, triangle[ntriang].p[2].z );
+					}
 				
-				if(ntriang != 0)
-					printf("ntriang:%d\n", ntriang);
-				for (int i = 0; i < 8; ++i) 
-					printf("gridcell[%d] val = %lf  \n", i, gridcell.val[i]);
-				*/
-				
+					if(ntriang != 0)
+						printf("ntriang:%d\n", ntriang);
+					for (int i = 0; i < 8; ++i) 
+						printf("gridcell[%d] val = %lf  \n", i, gridcell.val[i]);
+					*/
+				//}
 			}
 		}
 	}
@@ -233,7 +241,12 @@ int Mesh::Polygonise(const std::string &filename, GRIDCELL grid, double isolevel
 	std::string outputfile = filename;
 	FILE *fp;
 	fp = fopen(outputfile.c_str(), "a");
-
+	/*
+	if (!fp) {
+	printf("ERROR cannot open file: %s", outputfile);
+		exit(0);
+	}
+	*/
 	for (int i = 0;i < 12;++i) {
 		vertlist[i].x = 0;
 		vertlist[i].y = 0;
