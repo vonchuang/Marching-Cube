@@ -59,115 +59,23 @@ Mesh Mesh::LoadMesh(const std::string &filename, const std::string &newmesh)
 
 		printf("shape[%ld].vertices: %ld\n", i, shapes[i].mesh.positions.size());
 		assert((shapes[i].mesh.indices.size() % 4) == 0);
-		
-		//indice
-		/*
-		for (size_t f = 0; f < shapes[i].mesh.indices.size() / 4; f++) {
-		
-			printf("  idx[%ld] = %d, %d, %d, %d. mat_id = %d\n", f,
-				shapes[i].mesh.indices[4 * f + 0],
-				shapes[i].mesh.indices[4 * f + 1],
-				shapes[i].mesh.indices[4 * f + 2],
-				shapes[i].mesh.indices[4 * f + 3],
-				shapes[i].mesh.material_ids[f]);
-		
-		}
-		*/
 
 		//v: position
 		assert((shapes[i].mesh.positions.size() % 3) == 0);
 		for (size_t v = 0; v < shapes[i].mesh.positions.size() / 3; v++) {
 		//for (size_t v = 0; v < 20; v++) {	//test
-			/*
-			printf("  v[%ld] = (%.2f, %.2f, %.2f)\n", v,
-				shapes[i].mesh.positions[3 * v + 0],
-				shapes[i].mesh.positions[3 * v + 1],
-				shapes[i].mesh.positions[3 * v + 2]);
-				
-			fprintf(fp, "v %.1f %.1f %.1f\n",
-				shapes[i].mesh.positions[3 * v + 0],
-				shapes[i].mesh.positions[3 * v + 1],
-				shapes[i].mesh.positions[3 * v + 2]);
-			*/
+
 			int x_index = (int)(shapes[i].mesh.positions[3 * v + 0] * 10 + 10);
 			int y_index = (int)(shapes[i].mesh.positions[3 * v + 1] * 10 + 10);
 			int z_index = (int)(shapes[i].mesh.positions[3 * v + 2] * 10 + 10);
 
-			//printf("  v[%ld] = (%d, %d, %d)\n", v, x_index, y_index, z_index);
 			points.pos[x_index][y_index][z_index] = 1;
-			/*
-			fprintf(fp, "v %.2f %.2f %.2f\n",
-				shapes[i].mesh.positions[3 * v + 0],
-				shapes[i].mesh.positions[3 * v + 1],
-				shapes[i].mesh.positions[3 * v + 2]);
-			*/
 		}
-
-		//vt: texcoords
-		/*
-		for (size_t v = 0; v < shapes[i].mesh.texcoords.size() / 3; v++) {
-			
-			printf("  vt[%ld] = (%f, %f)\n", v,
-				shapes[i].mesh.texcoords[2 * v + 0],
-				shapes[i].mesh.texcoords[2 * v + 1]);
-			
-			fprintf(fp, "vt %.2f %.2f \n",
-				shapes[i].mesh.texcoords[2 * v + 0],
-				shapes[i].mesh.texcoords[2 * v + 1]);
-			
-		}
-		*/
-
-		//vn: normals
-		/*
-		for (size_t v = 0; v < shapes[i].mesh.normals.size() / 3; v++) {
-			
-			printf("  vn[%ld] = (%f, %f, %f)\n", v,
-				shapes[i].mesh.normals[3 * v + 0],
-				shapes[i].mesh.normals[3 * v + 1],
-				shapes[i].mesh.normals[3 * v + 2]);
-			
-			fprintf(fp, "vn %.2f %.2f %.2f\n",
-				shapes[i].mesh.normals[3 * v + 0],
-				shapes[i].mesh.normals[3 * v + 1],
-				shapes[i].mesh.normals[3 * v + 2]);
-		}
-		*/
-
 	}
-	
-
-	//material
-	/*
-	for (size_t i = 0; i < materials.size(); i++) {
-		printf("material[%ld].name = %s\n", i, materials[i].name.c_str());
-		printf("  material.Ka = (%f, %f ,%f)\n", materials[i].ambient[0], materials[i].ambient[1], materials[i].ambient[2]);
-		printf("  material.Kd = (%f, %f ,%f)\n", materials[i].diffuse[0], materials[i].diffuse[1], materials[i].diffuse[2]);
-		printf("  material.Ks = (%f, %f ,%f)\n", materials[i].specular[0], materials[i].specular[1], materials[i].specular[2]);
-		printf("  material.Tr = (%f, %f ,%f)\n", materials[i].transmittance[0], materials[i].transmittance[1], materials[i].transmittance[2]);
-		printf("  material.Ke = (%f, %f ,%f)\n", materials[i].emission[0], materials[i].emission[1], materials[i].emission[2]);
-		printf("  material.Ns = %f\n", materials[i].shininess);
-		printf("  material.Ni = %f\n", materials[i].ior);
-		printf("  material.dissolve = %f\n", materials[i].dissolve);
-		printf("  material.illum = %d\n", materials[i].illum);
-		printf("  material.map_Ka = %s\n", materials[i].ambient_texname.c_str());
-		printf("  material.map_Kd = %s\n", materials[i].diffuse_texname.c_str());
-		printf("  material.map_Ks = %s\n", materials[i].specular_texname.c_str());
-		printf("  material.map_Ns = %s\n", materials[i].specular_highlight_texname.c_str());
-		std::map<std::string, std::string>::const_iterator it(materials[i].unknown_parameter.begin());
-		std::map<std::string, std::string>::const_iterator itEnd(materials[i].unknown_parameter.end());
-		for (; it != itEnd; it++) {
-			printf("  material.%s = %s\n", it->first.c_str(), it->second.c_str());
-		}
-		printf("\n");
-
-	}
-	*/
 
 	for (int i = 0;i < 19;++i) {
 		for (int j = 0; j < 19; ++j) {
 			for (int k = 0; k < 19; ++k) {
-				//if(points.pos[i][j][k] == 1){
 					GRIDCELL gridcell;
 					TRIANGLE triangle[8];
 					double isolevel = 0.01;
@@ -213,21 +121,8 @@ Mesh Mesh::LoadMesh(const std::string &filename, const std::string &newmesh)
 					gridcell.p[7].y = (((double)(j + 1) - 10) / 10);
 					gridcell.p[7].z = (((double)(k + 1) - 10) / 10);
 				
-				
 					int ntriang = points.Polygonise(outputfile.c_str(), gridcell, isolevel, triangle);
-					/*
-					for(int i=0; i<ntriang; ++i){
-						//printf("%lf %lf %lf\n", triangle[ntriang].p[0].x, triangle[ntriang].p[0].y, triangle[ntriang].p[0].z );
-						//printf("%lf %lf %lf\n", triangle[ntriang].p[1].x, triangle[ntriang].p[1].y, triangle[ntriang].p[1].z );
-						//printf("%lf %lf %lf\n", triangle[ntriang].p[2].x, triangle[ntriang].p[2].y, triangle[ntriang].p[2].z );
-					}
-				
-					if(ntriang != 0)
-						printf("ntriang:%d\n", ntriang);
-					for (int i = 0; i < 8; ++i) 
-						printf("gridcell[%d] val = %lf  \n", i, gridcell.val[i]);
-					*/
-				//}
+
 			}
 		}
 	}
@@ -241,12 +136,7 @@ int Mesh::Polygonise(const std::string &filename, GRIDCELL grid, double isolevel
 	std::string outputfile = filename;
 	FILE *fp;
 	fp = fopen(outputfile.c_str(), "a");
-	/*
-	if (!fp) {
-	printf("ERROR cannot open file: %s", outputfile);
-		exit(0);
-	}
-	*/
+	
 	for (int i = 0;i < 12;++i) {
 		vertlist[i].x = 0;
 		vertlist[i].y = 0;
