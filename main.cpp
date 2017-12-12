@@ -84,7 +84,7 @@ int main(void)
     glewExperimental = GL_TRUE;
     glewInit();
 
-	auto newmesh = Mesh::LoadMesh("../resource/sphere.obj", "../resource/new.obj");
+	auto newmesh = Mesh::LoadMesh("../resource/monkey.obj", "../resource/new.obj");
     auto mesh1 = StaticMesh::LoadMesh("../resource/new.obj");
     auto prog = Program::LoadFromFile("../resource/vs.txt", "../resource/gs.txt", "../resource/fs.txt");
 	auto text = Texture2D::LoadFromFile("../resource/brick.png");
