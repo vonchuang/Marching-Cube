@@ -63,7 +63,6 @@ Mesh Mesh::LoadMesh(const std::string &filename, const std::string &newmesh)
 		//v: position
 		assert((shapes[i].mesh.positions.size() % 3) == 0);
 		for (size_t v = 0; v < shapes[i].mesh.positions.size() / 3; v++) {
-		//for (size_t v = 0; v < 20; v++) {	//test
 
 			int x_index = (int)(shapes[i].mesh.positions[3 * v + 0] * 10 + 10);
 			int y_index = (int)(shapes[i].mesh.positions[3 * v + 1] * 10 + 10);
@@ -76,52 +75,52 @@ Mesh Mesh::LoadMesh(const std::string &filename, const std::string &newmesh)
 	for (int i = 0;i < 19;++i) {
 		for (int j = 0; j < 19; ++j) {
 			for (int k = 0; k < 19; ++k) {
-					GRIDCELL gridcell;
-					TRIANGLE triangle[8];
-					double isolevel = 0.01;
+				GRIDCELL gridcell;
+				TRIANGLE triangle[8];
+				double isolevel = 0.01;
 
-					for (int i = 0; i < 8; ++i) {
-						gridcell.p[i].x = 0; gridcell.p[i].y = 0; gridcell.p[i].z = 0;
-						gridcell.val[i]  = 0;
-						triangle[i].p[0].x = 0; triangle[i].p[0].y = 0; triangle[i].p[0].z = 0;
-						triangle[i].p[1].x = 0; triangle[i].p[1].y = 0; triangle[i].p[1].z = 0;
-						triangle[i].p[2].x = 0; triangle[i].p[2].y = 0; triangle[i].p[2].z = 0;
-					}
+				for (int i = 0; i < 8; ++i) {
+					gridcell.p[i].x = 0; gridcell.p[i].y = 0; gridcell.p[i].z = 0;
+					gridcell.val[i]  = 0;
+					triangle[i].p[0].x = 0; triangle[i].p[0].y = 0; triangle[i].p[0].z = 0;
+					triangle[i].p[1].x = 0; triangle[i].p[1].y = 0; triangle[i].p[1].z = 0;
+					triangle[i].p[2].x = 0; triangle[i].p[2].y = 0; triangle[i].p[2].z = 0;
+				}
 				
-					gridcell.val[0] = points.pos[i][j][k];
-					gridcell.p[0].x = (((double)(i)-10) / 10);
-					gridcell.p[0].y = (((double)(j)-10) / 10);
-					gridcell.p[0].z = (((double)(k)-10) / 10);
-					gridcell.val[1] = points.pos[i+1][j][k];
-					gridcell.p[1].x = (((double)(i+1)-10) / 10);
-					gridcell.p[1].y = (((double)(j  )-10) / 10);
-					gridcell.p[1].z = (((double)(k) - 10) / 10);
-					gridcell.val[2] = points.pos[i + 1][j+1][k];
-					gridcell.p[2].x = (((double)(i + 1) - 10) / 10);
-					gridcell.p[2].y = (((double)(j+1)-10) / 10);
-					gridcell.p[2].z = (((double)(k)-10) / 10);
-					gridcell.val[3] = points.pos[i][j+1][k];
-					gridcell.p[3].x = (((double)(i) - 10) / 10);
-					gridcell.p[3].y = (((double)(j+1)-10) / 10);
-					gridcell.p[3].z = (((double)(k) - 10) / 10);
-					gridcell.val[4] = points.pos[i][j][k+1];
-					gridcell.p[4].x = (((double)(i)-10) / 10);
-					gridcell.p[4].y = (((double)(j) - 10) / 10);
-					gridcell.p[4].z = (((double)(k+1)-10) / 10);
-					gridcell.val[5] = points.pos[i+1][j][k + 1];
-					gridcell.p[5].x = (((double)(i+1)-10) / 10);
-					gridcell.p[5].y = (((double)(j) - 10) / 10);
-					gridcell.p[5].z = (((double)(k + 1) - 10) / 10);
-					gridcell.val[6] = points.pos[i + 1][j + 1][k+1];
-					gridcell.p[6].x = (((double)(i + 1) - 10) / 10);
-					gridcell.p[6].y = (((double)(j + 1) - 10) / 10);
-					gridcell.p[6].z = (((double)(k+1)-10) / 10);
-					gridcell.val[7] = points.pos[i][j + 1][k + 1];
-					gridcell.p[7].x = (((double)(i) - 10) / 10);
-					gridcell.p[7].y = (((double)(j + 1) - 10) / 10);
-					gridcell.p[7].z = (((double)(k + 1) - 10) / 10);
+				gridcell.val[0] = points.pos[i][j][k];
+				gridcell.p[0].x = (((double)(i)-10) / 10);
+				gridcell.p[0].y = (((double)(j)-10) / 10);
+				gridcell.p[0].z = (((double)(k)-10) / 10);
+				gridcell.val[1] = points.pos[i+1][j][k];
+				gridcell.p[1].x = (((double)(i+1)-10) / 10);
+				gridcell.p[1].y = (((double)(j  )-10) / 10);
+				gridcell.p[1].z = (((double)(k) - 10) / 10);
+				gridcell.val[2] = points.pos[i + 1][j+1][k];
+				gridcell.p[2].x = (((double)(i + 1) - 10) / 10);
+				gridcell.p[2].y = (((double)(j+1)-10) / 10);
+				gridcell.p[2].z = (((double)(k)-10) / 10);
+				gridcell.val[3] = points.pos[i][j+1][k];
+				gridcell.p[3].x = (((double)(i) - 10) / 10);
+				gridcell.p[3].y = (((double)(j+1)-10) / 10);
+				gridcell.p[3].z = (((double)(k) - 10) / 10);
+				gridcell.val[4] = points.pos[i][j][k+1];
+				gridcell.p[4].x = (((double)(i)-10) / 10);
+				gridcell.p[4].y = (((double)(j) - 10) / 10);
+				gridcell.p[4].z = (((double)(k+1)-10) / 10);
+				gridcell.val[5] = points.pos[i+1][j][k + 1];
+				gridcell.p[5].x = (((double)(i+1)-10) / 10);
+				gridcell.p[5].y = (((double)(j) - 10) / 10);
+				gridcell.p[5].z = (((double)(k + 1) - 10) / 10);
+				gridcell.val[6] = points.pos[i + 1][j + 1][k+1];
+				gridcell.p[6].x = (((double)(i + 1) - 10) / 10);
+				gridcell.p[6].y = (((double)(j + 1) - 10) / 10);
+				gridcell.p[6].z = (((double)(k+1)-10) / 10);
+				gridcell.val[7] = points.pos[i][j + 1][k + 1];
+				gridcell.p[7].x = (((double)(i) - 10) / 10);
+				gridcell.p[7].y = (((double)(j + 1) - 10) / 10);
+				gridcell.p[7].z = (((double)(k + 1) - 10) / 10);
 				
-					int ntriang = points.Polygonise(outputfile.c_str(), gridcell, isolevel, triangle);
+				int ntriang = points.Polygonise(outputfile.c_str(), gridcell, isolevel, triangle);
 
 			}
 		}
